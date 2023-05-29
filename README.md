@@ -1,10 +1,10 @@
-# Toy Lang
+# Fast
 
-In order to hone my C skills, I am going to make an interpreter for a toy language in C.
+In order to hone my C skills, I am going to make an interpreter for the Fast language in C.
 
 ## Features
 
-ToyLang is a simple imperative language, but it will have some advanced features.
+Fast is a simple imperative language, but it will have some advanced features.
 
 - Let statements, for declaring and optionally defining variables
 - Values
