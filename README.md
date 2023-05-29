@@ -28,6 +28,7 @@ Fast is a simple imperative language, but it will have some advanced features.
 - Macros and staging
 - Bytecode compiler
 - Optimizing transpiler (to C)
+- Compile-time reflection go burr `{x = 1, y = 2}.x.type == Int`
 
 ## Ecosystem
 
@@ -56,6 +57,7 @@ Any good language must have all of the following
         - exists(path)
     - Graphics
     - Science
+    - Reflection
 - Docs generator
 - Package manager
 - Testing framework
