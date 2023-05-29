@@ -29,6 +29,37 @@ Fast is a simple imperative language, but it will have some advanced features.
 - Bytecode compiler
 - Optimizing transpiler (to C)
 
+## Ecosystem
+
+Any good language must have all of the following
+- Standard library
+    - Math stuff
+        - NDArray implementation
+    - Collections
+        - Array
+        - HashMap
+        - BTreeMap
+        - LinkedList
+        - Deque
+    - Sync
+    - Parsers
+        - Combinators
+        - Generators
+        - PEG
+        - Languages
+            - CSV
+            - JSON
+            - YAML
+            - XML
+    - File System
+        - Path
+        - exists(path)
+    - Graphics
+    - Science
+- Docs generator
+- Package manager
+- Testing framework
+
 ## Command-Line Interface
 
 - `fast FILENAME` Compile and run `FILENAME` and any implicit dependencies
