@@ -43,6 +43,8 @@ ToyLang is a simple imperative language, but it will have some advanced features
 
 The grammar is roughly C-like.
 
+To be clear, this grammar may or may not match the current implementation of the parser.
+
 ```
 statement = use | let | assign | fn_statement | expr
 use = "use" simple_string
