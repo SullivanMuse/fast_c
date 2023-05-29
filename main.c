@@ -1,36 +1,13 @@
+#include <assert.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-#include <assert.h>
+#include <string.h>
 
-void *box(void *object, size_t size)
-{
-    char *ptr = malloc(size);
-    if (ptr == NULL)
-    {
-        exit(1);
-    }
-    memcpy(ptr, object, size);
-    return ptr;
-}
-
-#define BOX(x) box(&x, sizeof(x))
-
-typedef struct Span
-{
-    int start, end;
-} Span;
-
-// Expr value types
-typedef struct String
-{
-} String;
-
-typedef struct Integer
-{
-} Integer;
+#include "box.h"
+#include "err.h"
+#include "parsing.h"
 
 typedef struct BinOp
 {
@@ -141,37 +118,39 @@ void destroy_ResultExpr(ResultExpr *result)
     }
 }
 
-/// @brief String
-///     '"' (!'"')* '"'
-/// @param s
-/// @param i
-ResultExpr parse_String(char *s, int i)
+bool parse_String_item(Input *s)
 {
-    ResultExpr result;
-    result.expr.span.start = i;
-    if (s[i++] == '"')
+    int i = s->i;
+    if (!(tag("\\", s) || tag("\"", s) || tag("{", s) || tag("}", s)))
     {
-        while (s[i] != '\0' && s[i] != '"')
-        {
-            ++i;
-        }
-        if (s[i] == '\0')
-        {
-            printf("\x1b[1;31merror:\x1b[0m unfinished string\n");
-            result.valid = false;
-            return result;
-        }
-        if (s[i] == '"')
-        {
-            ++i;
-            result.expr.ty = ExprTy_String;
-            result.expr.span.end = i;
-            result.expr.val.string;
-            result.valid = true;
-            return result;
-        }
+        return true;
     }
-    return result;
+    else
+    {
+        s->i = i;
+        return false;
+    }
+}
+
+// Parse a String
+// '"' item* '"'
+// item = character | escape | splice
+// escape = '\n' | '\r' | '\t' | '\b' | '\{' | '\}' | '\"'
+// [todo] splice = '{' expr '}'
+// character = !('\' | '"' | '{' | '}')
+bool parse_String(Input *s, Expr *expr)
+{
+    span_start(s, &expr->span);
+    if (tag("\"", s) && many0(parse_String_item, s) && tag("\"", s))
+    {
+        span_end(s, &expr->span);
+        expr->ty = ExprTy_String;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 void test_parse_String()
