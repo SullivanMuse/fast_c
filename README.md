@@ -60,6 +60,13 @@ Any good language must have all of the following
 - Package manager
 - Testing framework
 
+## Error Handling
+
+- Because returning multiple errors is supported, we use a simple linked list of errors through an out-argument
+- Functions which can error are by convention called `f_err`, and their last argument is of type `ParseError **`
+- Callers must pass in a valid `ParseError **`
+- Callers must check the value of the error pointer after the call
+
 ## Command-Line Interface
 
 - `fast FILENAME` Compile and run `FILENAME` and any implicit dependencies
