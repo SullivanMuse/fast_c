@@ -13,7 +13,7 @@ ToyLang is a simple imperative language, but it will have some advanced features
         - Bitwise operators `~ & | ^ << >>`
     - Immutable strings `"Hello, world!"`
         - Efficient formatting `"{name} is looking good today!"`
-    - Structs `{x = 1, y = 2}`
+    - Objects `{x = 1, y = 2}`
         - Concatenation `{..xs, ..ys}`. `xs` and `ys` must have a disjoint set of keys.
     - Variants `:variant1`
     - Macro expansion and staging system
@@ -21,11 +21,42 @@ ToyLang is a simple imperative language, but it will have some advanced features
     - `use mod1` includes the code from `mod1.fast` under the `mod1` module
     - `use ..module` includes the code from `../module.fast`
     - `use mod1.mod2` includes the code from `./mod1/mod2.fast` as `mod2`
+- Compile-time reflection
+- Macros and staging
+- Bytecode compiler
+- Optimizing transpiler (to C)
 
 ## Tasks
 
 - Write grammar
+- Write parser
+    - Strings
+    - Integers
+    - Variants
+    - Objects
+- Make GC example code
+    - Mark variable not on stack when it is popped
 
 ## Done
 
 ## Grammar
+
+The grammar is roughly C-like.
+
+```
+statement = use | let | assign | fn_statement | expr
+use = "use" simple_string
+simple_string = '"' simple_string_item* '"'
+simple_string_item = !'"' | '""' | '\"' | '\\'
+
+string = '"' string_item* '"'
+string_item = !('"' | '{' | '}') | '""' | '\"' | '\\' | '{{' | '}}' | '\{' | '\}' | escape_sequence | splice
+escape_sequence = '\n' | '\b' | '\r' | '\t' | ansi_escape_sequence
+splice = '{' expr '}'
+
+inner = integer | struct | variant | string
+pow = inner ('**' pow)?
+mul = pow ('*' pow)*
+add = mul ('+' mul)*
+expr = add
+```
