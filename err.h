@@ -29,4 +29,14 @@ void push_ParseError(Span span, char *message, ParseErrors *errors)
     *errors = (ParseErrors)BOX(out);
 }
 
+// Destroy ParseErrors
+void destroy_ParseErrors(ParseErrors errors)
+{
+    if (errors != NULL)
+    {
+        destroy_ParseErrors(errors->next);
+        free(errors);
+    }
+}
+
 #endif
