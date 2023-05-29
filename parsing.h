@@ -87,7 +87,9 @@ bool tag(char *m, Input *s)
     {
         s->i += offset;
         return true;
-    } else {
+    }
+    else
+    {
         return false;
     }
 }
