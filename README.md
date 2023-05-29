@@ -21,10 +21,17 @@ Fast is a simple imperative language, but it will have some advanced features.
     - `use mod1` includes the code from `mod1.fast` under the `mod1` module
     - `use ..module` includes the code from `../module.fast`
     - `use mod1.mod2` includes the code from `./mod1/mod2.fast` as `mod2`
+- Debugging
+    - `breakpoint()` insert a breakpoint
+    - `breakpoint(condition)` breakpoint if condition
 - Compile-time reflection
 - Macros and staging
 - Bytecode compiler
 - Optimizing transpiler (to C)
+
+## Command-Line Interface
+
+- `fast FILENAME` Compile and run `FILENAME` and any implicit dependencies
 
 ## Tasks
 
